@@ -1,0 +1,74 @@
+<header class="header">
+  <h1 style="color: white; font-weight: 700;">Book Store</h1>
+  
+  <!-- Search Input -->
+  <div class="search-container">
+    <input 
+      type="text" 
+      [(ngModel)]="searchQuery"
+      placeholder="Search..." 
+    />
+  </div>
+  
+  <!-- Profile Icon and Dropdown -->
+  <div class="profile-container">
+    <img 
+      src="path_to_your_profile_icon.png" 
+      alt="Profile Icon" 
+      class="profile-icon"
+      (click)="toggleDropdown()"
+    />
+    
+    <!-- Dropdown Menu -->
+    <div *ngIf="isDropdownVisible" class="dropdown-content">
+      <button (click)="logout()">Logout</button>
+    </div>
+  </div>
+</header>
+
+<!-- Book Grid -->
+<div class="grid-container" style="padding: 3%;">
+  <div *ngFor="let book of filteredBooks" class="book-card">
+    <div class="book-image-container">
+      <img [src]="book.image" alt="{{ book.title }}" class="book-image" />
+    </div>
+    <div class="book-info">
+      <h3>{{ book.title }}</h3>
+      <h3>{{ book.price | currency:'INR' }}</h3>
+
+    <!-- <button *ngIf="!book.isPricePaid" class="pay-btn" (click)="openPaymentModal(book)">Pay</button>
+
+
+<button *ngIf="book.isPricePaid" class="read-book-btn" (click)="viewDescriptionAsPdf(book)">Read book</button> -->
+
+
+<span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-green-900 dark:text-green-300" style="width: 28%;" *ngIf="!book.isPricePaid"  (click)="openPaymentModal(book)">Pay</span>
+<span class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-yellow-900 dark:text-yellow-300" style="width: 43%;" *ngIf="book.isPricePaid"  (click)="viewDescriptionAsPdf(book)">Read book</span>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Modal -->
+<div *ngIf="modalOpen" class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <h3 *ngIf="!isPriceMatched">Enter Price Info</h3>
+
+    <div *ngIf="!isPriceMatched">
+      <p>Book Price: {{ selectedBook?.price | currency:'INR' }}</p> 
+      <input
+        type="number"
+        [(ngModel)]="inputValue"
+        placeholder="Enter price"
+        [ngClass]="{ error: !isPriceMatched && inputValue && inputValue !== selectedBook?.price }"
+      />
+      <button (click)="validatePrice()">OK</button>
+      <button (click)="closeModal()">Cancel</button>
+    </div>
+
+    <div *ngIf="isPriceMatched">
+      <h4>Book Description</h4>
+      <p>{{ selectedBook?.description }}</p>
+      <button (click)="closeModal()">Close</button>
+    </div>
+  </div>
+</div>

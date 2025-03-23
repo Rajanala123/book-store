@@ -1,0 +1,75 @@
+<div class="flex items-center justify-center min-h-screen">
+  <div class="w-full max-w-xs">
+    <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 cardStyle" [formGroup]="login">
+      <div class="text-center mb-6">
+        <h1 class="text-2xl font-bold text-gray-700" style="color: #22a59c;">Digital Bookstore</h1>
+      </div>
+      <div class="mb-4">
+        <label class="block text-xs font-bold mb-2 labelStyle" for="grid-first-name">
+          User Name
+          <span class="text-red-500">*</span>
+        </label>
+        <input
+          class="appearance-none block w-full text-gray-700 border border-gray-300 rounded-sm py-2 px-4 mb-3 leading-tight focus:outline-none hover:border-[#22a59c] invalid:border-red-500"
+          id="grid-first-name" type="text" placeholder="Enter User Name" formControlName="userName" [ngClass]="{
+            'border-gray-300': !(getControl('userName')?.invalid) || !(getControl('userName')?.touched),
+            'border-red-500': getControl('userName')?.invalid && (getControl('userName')?.dirty || getControl('userName')?.touched),
+          }">
+        <div *ngIf="login.get('userName')?.invalid && (login.get('userName')?.dirty || login.get('userName')?.touched)"
+          class="text-red-600 text-xs">
+          <div *ngIf="login.get('userName')?.errors?.['required']">User Name is required.</div>
+        </div>
+      </div>
+      <div class="mb-6">
+        <label class="block text-xs font-bold mb-2 labelStyle" for="password">
+          Password
+          <span class="text-red-500">*</span>
+        </label>
+        <div class="relative">
+          <input
+            class="appearance-none block w-full text-gray-700 border border-gray-300 rounded-sm py-2 px-4 mb-3 leading-tight focus:outline-none hover:border-[#22a59c] invalid:border-red-500"
+            id="password" [type]="passwordVisible ? 'text' : 'password'" placeholder="Enter Password"
+            formControlName="password" [ngClass]="{
+              'border-gray-300': !(getControl('password')?.invalid) || !(getControl('password')?.touched),
+              'border-red-500': getControl('password')?.invalid && (getControl('password')?.dirty || getControl('password')?.touched),
+            }">
+          <span class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
+            (click)="passwordVisible = !passwordVisible">
+            <svg *ngIf="!passwordVisible" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" class="w-6 h-6 text-gray-600 passwordStyle">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                d="M17 9l2.5-2.5M22 12s-3 8-10 8-10-8-10-8 3-8 10-8 10 8 10 8z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                d="M16.5 12a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
+
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 3l16 16" />
+            </svg>
+            <!-- Open eye icon -->
+            <svg *ngIf="passwordVisible" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" class="w-6 h-6 text-gray-600 passwordStyle">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M16.5 12a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M1 12s3-8 11-8 11 8 11 8-3 8-11 8-11-8-11-8z" />
+            </svg>
+          </span>
+        </div>
+        <div *ngIf="login.get('password')?.invalid && (login.get('password')?.dirty || login.get('password')?.touched)"
+          class="text-red-600 text-xs">
+          <div *ngIf="login.get('password')?.errors?.['required']">Password is required.</div>
+        </div>
+      </div>
+      <button
+        class="bg-gradient-to-r from-[#22a59c99] to-[#1e8d84] text-white py-1 px-4 focus:outline-none focus:shadow-outline mx-auto block"
+        type="button" (click)="postLogin()">
+        Sign In
+      </button>
+      <div class="mt-4 text-center">
+        <p class="text-sm text-gray-600">
+          Don't have an account?
+          <a href="/register" class="font-semibold" style="color: #22a59c;">Create one</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
